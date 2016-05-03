@@ -17,7 +17,7 @@ module.exports = class Model {
 	 * @param {string} [title] The title of the task
 	 * @param {function} [callback] The callback to fire after the model is created
 	 */
-	create(title, callback){
+	create(title, callback) {
 		title = title || '';
 
 		let newItem = {
