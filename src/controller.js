@@ -56,6 +56,7 @@ module.exports = class Controller {
 	 * object and it'll handle the DOM insertion and saving of the new item.
 	 */
 	addItem(title){
+		console.log('hoho')
 		if (title.trim() === '') {
 			return;
 		}
