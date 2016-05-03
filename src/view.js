@@ -1,17 +1,17 @@
 'use strict';
+let Helpers = require('./helpers.js');
+Helpers = new Helpers();
+// import {Helpers.qs, Helpers.qsa, Helpers.$on, Helpers.$parent, Helpers.$delegate} from './helpers';
 
-
-// import {qs, qsa, $on, $parent, $delegate} from './helpers';
-
-let _itemId = element => parseInt($parent(element, 'li').dataset.id, 10);
+let _itemId = element => parseInt(Helpers.$parent(element, 'li').dataset.id, 10);
 
 let _setFilter = currentPage => {
-	qs('.filters .selected').className = '';
-	qs(`.filters [href="#/${currentPage}"]`).className = 'selected';
+	Helpers.qs('.filters .selected').className = '';
+	Helpers.qs(`.filters [href="#/${currentPage}"]`).className = 'selected';
 };
 
 let _elementComplete = (id, completed) => {
-	let listItem = qs(`[data-id="${id}"]`);
+	let listItem = Helpers.qs(`[data-id="${id}"]`);
 
 	if (!listItem) {
 		return;
@@ -20,11 +20,11 @@ let _elementComplete = (id, completed) => {
 	listItem.className = completed ? 'completed' : '';
 
 	// In case it was toggled from an event and not by clicking the checkbox
-	qs('input', listItem).checked = completed;
+	Helpers.qs('input', listItem).checked = completed;
 };
 
 let _editItem = (id, title) => {
-	let listItem = qs(`[data-id="${id}"]`);
+	let listItem = Helpers.qs(`[data-id="${id}"]`);
 
 	if (!listItem) {
 		return;
@@ -49,20 +49,20 @@ let _editItem = (id, title) => {
  *   - render(command, parameterObject)
  *     Renders the given command with the options
  */
-class View {
+module.exports = class View {
 	constructor(template) {
 		this.template = template;
 
 		this.ENTER_KEY = 13;
 		this.ESCAPE_KEY = 27;
 
-		this.$todoList = qs('.todo-list');
-		this.$todoItemCounter = qs('.todo-count');
-		this.$clearCompleted = qs('.clear-completed');
-		this.$main = qs('.main');
-		this.$footer = qs('.footer');
-		this.$toggleAll = qs('.toggle-all');
-		this.$newTodo = qs('.new-todo');
+		this.$todoList = Helpers.qs('.todo-list');
+		this.$todoItemCounter = Helpers.qs('.todo-count');
+		this.$clearCompleted = Helpers.qs('.clear-completed');
+		this.$main = Helpers.qs('.main');
+		this.$footer = Helpers.qs('.footer');
+		this.$toggleAll = Helpers.qs('.toggle-all');
+		this.$newTodo = Helpers.qs('.new-todo');
 
 		this.viewCommands = {
 			showEntries: parameter => this.$todoList.innerHTML = this.template.show(parameter),
@@ -80,7 +80,7 @@ class View {
 	}
 
 	_removeItem(id) {
-		let elem = qs(`[data-id="${id}"]`);
+		let elem = Helpers.qs(`[data-id="${id}"]`);
 
 		if (elem) {
 			this.$todoList.removeChild(elem);
@@ -93,18 +93,18 @@ class View {
 	}
 
 	_editItemDone(id, title) {
-		let listItem = qs(`[data-id="${id}"]`);
+		let listItem = Helpers.qs(`[data-id="${id}"]`);
 
 		if (!listItem) {
 			return;
 		}
 
-		let input = qs('input.edit', listItem);
+		let input = Helpers.qs('input.edit', listItem);
 		listItem.removeChild(input);
 
 		listItem.className = listItem.className.replace(' editing', '');
 
-		qsa('label', listItem).forEach(label => label.textContent = title);
+		Helpers.qsa('label', listItem).forEach(label => label.textContent = title);
 	}
 
 	render(viewCmd, parameter) {
@@ -114,7 +114,7 @@ class View {
 	_bindItemEditDone(handler) {
 		let self = this;
 
-		$delegate(self.$todoList, 'li .edit', 'blur', function () {
+		Helpers.$delegate(self.$todoList, 'li .edit', 'blur', function () {
 			if (!this.dataset.iscanceled) {
 				handler({
 					id: _itemId(this),
@@ -124,7 +124,7 @@ class View {
 		});
 
 		// Remove the cursor from the input when you hit enter just like if it were a real form
-		$delegate(self.$todoList, 'li .edit', 'keypress', function (event) {
+		Helpers.$delegate(self.$todoList, 'li .edit', 'keypress', function (event) {
 			if (event.keyCode === self.ENTER_KEY) {
 				this.blur();
 			}
@@ -134,7 +134,7 @@ class View {
 	_bindItemEditCancel(handler) {
 		let self = this;
 
-		$delegate(self.$todoList, 'li .edit', 'keyup', function (event) {
+		Helpers.$delegate(self.$todoList, 'li .edit', 'keyup', function (event) {
 			if (event.keyCode === self.ESCAPE_KEY) {
 				let id = _itemId(this);
 				this.dataset.iscanceled = true;
@@ -147,23 +147,23 @@ class View {
 
 	bind(event, handler) {
 		if (event === 'newTodo') {
-			$on(this.$newTodo, 'change', () => handler(this.$newTodo.value));
+			Helpers.$on(this.$newTodo, 'change', () => handler(this.$newTodo.value));
 		} else if (event === 'removeCompleted') {
-			$on(this.$clearCompleted, 'click', handler);
+			Helpers.$on(this.$clearCompleted, 'click', handler);
 		} else if (event === 'toggleAll') {
-			$on(this.$toggleAll, 'click', function(){
+			Helpers.$on(this.$toggleAll, 'click', function(){
 				handler({completed: this.checked});
 			});
 		} else if (event === 'itemEdit') {
-			$delegate(this.$todoList, 'li label', 'dblclick', function(){
+			Helpers.$delegate(this.$todoList, 'li label', 'dblclick', function(){
 				handler({id: _itemId(this)});
 			});
 		} else if (event === 'itemRemove') {
-			$delegate(this.$todoList, '.destroy', 'click', function(){
+			Helpers.$delegate(this.$todoList, '.destroy', 'click', function(){
 				handler({id: _itemId(this)});
 			});
 		} else if (event === 'itemToggle') {
-			$delegate(this.$todoList, '.toggle', 'click', function(){
+			Helpers.$delegate(this.$todoList, '.toggle', 'click', function(){
 				handler({
 					id: _itemId(this),
 					completed: this.checked
@@ -175,4 +175,4 @@ class View {
 			this._bindItemEditCancel(handler);
 		}
 	}
-}
+};

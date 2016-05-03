@@ -1,6 +1,6 @@
 'use strict';
 
-class Controller {
+module.exports = class Controller {
 	/**
 	 * Take a model & view, then act as controller between them
 	 * @param  {object} model The model instance

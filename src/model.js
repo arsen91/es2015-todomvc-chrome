@@ -6,7 +6,7 @@
  * @constructor
  * @param {object} storage A reference to the client side storage class
  */
-class Model {
+module.exports = class Model {
 	constructor(storage) {
 		this.storage = storage;
 	}
@@ -114,4 +114,4 @@ class Model {
 			}
 		});
 	}
-}
+};

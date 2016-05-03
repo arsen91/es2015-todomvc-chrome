@@ -9,7 +9,7 @@
  * @param {function} callback Our fake DB uses callbacks because in
  * real life you probably would be making AJAX calls
  */
-class Store {
+module.exports = class Store {
 	constructor(name, callback) {
 		this._dbName = name;
 

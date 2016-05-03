@@ -16,7 +16,7 @@ const reHasUnescapedHtml = new RegExp(reUnescapedHtml.source);
 let escape = str => (str && reHasUnescapedHtml.test(str)) ? str.replace(reUnescapedHtml, escapeHtmlChar) : str;
 let escapeHtmlChar = chr => htmlEscapes[chr];
 
-class Template {
+module.exports = class Template {
 	constructor() {
 		this.defaultTemplate = `
 			<li data-id="{{id}}" class="{{completed}}">
@@ -92,4 +92,4 @@ class Template {
 	clearCompletedButton(completedTodos){
 		return (completedTodos > 0) ? 'Clear completed' : '';
 	}
-}
+};

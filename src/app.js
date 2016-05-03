@@ -1,9 +1,14 @@
+let Store = require('./store.js');
+let Model = require('./model.js');
+let Template = require('./template.js');
+let View = require('./view.js');
+let Controller = require('./controller.js');
+let Helpers = require('./helpers.js');
+Helpers = new Helpers();
+
 'use strict';
 
-let todo;
-const setView = () => todo.controller.setView(document.location.hash);
-
-class Todo {
+module.exports = class Todo {
 	/**
 	 * Init new Todo List
 	 * @param  {string} The name of your list
@@ -16,12 +21,6 @@ class Todo {
 		this.view = new View(this.template);
 
 		this.controller = new Controller(this.model, this.view);
+		
 	}
-}
-
-$on(window, 'load', () => {
-	todo = new Todo('todos-vanillajs');
-	setView();
-});
-
-$on(window, 'hashchange', setView);
+};
