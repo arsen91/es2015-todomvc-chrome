@@ -1,7 +1,6 @@
 'use strict';
 
-
-module.exports = {
+let helper = {
 	$on: (target, type, callback, useCapture) => {
 		target.addEventListener(type, callback, !!useCapture);
 	},
@@ -17,7 +16,7 @@ module.exports = {
 	$delegate: (target, selector, type, handler) => {
 		let dispatchEvent = event => {
 			const targetElement = event.target;
-			const potentialElements = this.qsa(selector, target);
+			const potentialElements = helper.qsa(selector, target);
 			const hasMatch = Array.prototype.indexOf.call(potentialElements, targetElement) >= 0;
 
 			if (hasMatch) {
@@ -28,7 +27,7 @@ module.exports = {
 		// https://developer.mozilla.org/en-US/docs/Web/Events/blur
 		const useCapture = type === 'blur' || type === 'focus';
 
-		this.$on(target, type, dispatchEvent, useCapture);
+		helper.$on(target, type, dispatchEvent, useCapture);
 	},
 
 	$parent: (element, tagName) => {
@@ -40,10 +39,11 @@ module.exports = {
 			return element.parentNode;
 		}
 
-		return this.$parent(element.parentNode, tagName);
+		return helper.$parent(element.parentNode, tagName);
 	}
 };
 
+module.exports = helper;
 // Allow for looping on nodes by chaining:
 // qsa('.foo').forEach(function () {})
 NodeList.prototype.forEach = Array.prototype.forEach;

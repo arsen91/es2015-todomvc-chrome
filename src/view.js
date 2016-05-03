@@ -1,6 +1,6 @@
 'use strict';
 let Helpers = require('./helpers.js');
-// Helpers = new Helpers();
+
 // import {Helpers.qs, Helpers.qsa, Helpers.$on, Helpers.$parent, Helpers.$delegate} from './helpers';
 
 let _itemId = element => parseInt(Helpers.$parent(element, 'li').dataset.id, 10);
