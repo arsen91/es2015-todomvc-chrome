@@ -4,7 +4,6 @@ let Template = require('./template.js');
 let View = require('./view.js');
 let Controller = require('./controller.js');
 let Helpers = require('./helpers.js');
-Helpers = new Helpers();
 
 'use strict';
 
