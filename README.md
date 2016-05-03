@@ -1,5 +1,7 @@
 # Vanilla ES6 (ES2015) • [TodoMVC](http://todomvc.com)
 
-This is a rewrite of the incoming ES2015 app for TodoMVC that works out of the box in Chrome 49+ without the need for a transpiler. 
+This is a fork of https://github.com/addyosmani/es2015-todomvc-chrome Addy Osmani's vanilla es6 TodoMVC. 
 
-Full ES2015 support in a browser would allow Luke Edwards [original](https://github.com/tastejs/todomvc/pull/1515) ES2015 app to run without any modifications needed.
+It's made with modules in commonjs style, so it requires transpiler. This fork uses Babel+Webpack for module system.
+
+Also one of the intents was to write tests for this project.
