@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Tue May 03 2016 01:10:28 GMT+0300 (MSK)
 var webpackConfig = require('./webpack.config');
-// webpackConfig.devtool = 'inline-source-map';
+
 module.exports = function(config) {
   config.set({
 
@@ -28,7 +28,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'spec/tests.bundle.js': ['webpack', 'sourcemap']
+        'spec/tests.bundle.js': ['webpack']
     },
 
     webpackMiddleware: {
