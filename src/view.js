@@ -1,6 +1,6 @@
 'use strict';
 let Helpers = require('./helpers.js');
-Helpers = new Helpers();
+
 // import {Helpers.qs, Helpers.qsa, Helpers.$on, Helpers.$parent, Helpers.$delegate} from './helpers';
 
 let _itemId = element => parseInt(Helpers.$parent(element, 'li').dataset.id, 10);
@@ -22,6 +22,7 @@ let _elementComplete = (id, completed) => {
 	// In case it was toggled from an event and not by clicking the checkbox
 	Helpers.qs('input', listItem).checked = completed;
 };
+
 
 let _editItem = (id, title) => {
 	let listItem = Helpers.qs(`[data-id="${id}"]`);
